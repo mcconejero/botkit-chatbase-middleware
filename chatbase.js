@@ -1,6 +1,6 @@
 const request = require('request');
 
-function chatbase(key, platform) {
+function chatbase(key, platform = 'Any') {
 
 logMessage = (bot, message, type) => {
 
@@ -30,13 +30,11 @@ logMessage = (bot, message, type) => {
 }
 
 function receive(bot, message, next) {
-  // fetch, axios, req or whatever
   logMessage(bot, message, 'user');
   next();
 }
 
 function send(bot, message, next) {
-  // fetch, axios, req or whatever
   logMessage(bot, message, 'agent');
   next();
 }
@@ -44,8 +42,4 @@ function send(bot, message, next) {
 return {send, receive}
 }
 
-module.exports = (controller) => {
-  controller.middleware.receive.use(receive);
-  controller.middleware.send.use(send);
-}
-
+module.exports = chatbase;
