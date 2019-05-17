@@ -1,68 +1,41 @@
-'use strict';
+var request = require("request");
 
-var request = require('request');
+module.exports = (apiKey, platform = "Any") => {
+  if (!apiKey) {
+    throw new Error('Must supply an apiKey')
+  }
 
-class ChatbaseBotkit {
-
-  constructor(apiKey, platform) {
-
-    if (!platform){
-      platform = 'Unspecified platform'
-    }
-
-    let that = this;
-
-    that.platform = platform;
-    that.apiKey = apiKey;
-
-    that.logMessage = (bot, message, type) => {
-
-      // map bot as user if not specified
-      if (!message.user) {
-        message.user = message.channelData.recipient.id;
-      }
-
-      const user = message.user || message.channelData.recipient.id
-
-      request({
-        url: 'https://chatbase.com/api/message',
-        method: 'POST',
+  function logMessage(bot, message, type) {
+    request(
+      {
+        url: "https://chatbase.com/api/message",
+        method: "POST",
         json: {
-          api_key: that.apiKey,
+          api_key: apiKey,
           type: type,
-          user_id: user,
+          user_id: message.user || message.channelData.recipient.id,
           time_stamp: new Date().getTime() / 1000,
-          platform: that.platform,
+          platform: platform,
           message: JSON.stringify(message.text)
         }
-      }, (err, httpRsp, body) => {
-      });
+      },
+      (err, httpRsp, body) => {}
+    );
+  }
+
+  function send(bot, message, next) {
+    if (message && message.type == "message") {
+      that.logMessage(bot, message, "user");
     }
-
-    that.send = (bot, message, next) => {
-			if (message && message.type == 'message') {
-				that.logMessage(bot, message, 'user');
-			}
-			next();
-		};
-
-		// botkit middleware endpoints
-		that.receive = (bot, message, next) => {
-			if (message && message.type == 'message') {
-				that.logMessage(bot, message, 'agent');
-			}
-			next();
-		};
+    next();
   }
+
+  function receive(bot, message, next) {
+    if (message && message.type == "message") {
+      that.logMessage(bot, message, "agent");
+    }
+    next();
+  }
+
+  return { send, receive }
 }
-
-module.exports = (apiKey, platform) => {
-  if (!apiKey) {
-    throw new Error('YOU MUST SUPPLY AN API KEY TO CHATBASE-BOTKIT!');
-  }
-
-  return {
-    botkit: new ChatbaseBotkit(apiKey, platform)
-  };
-};
-
