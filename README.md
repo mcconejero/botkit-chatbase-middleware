@@ -4,7 +4,7 @@ A middleware package for [Botkit](https://botkit.ai/) that easily logs your conv
 
 Install
 ```
-npm install chatbase-botkit-middleware -- save
+npm install chatbase-botkit-middleware --save
 ```
 
 Usage
