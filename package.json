@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/mcconejero/botkit-chatbase-middleware/issues"
   },
-  "homepage": "https://github.com/mcconejero/botkit-chatbase-middleware#readme"
+  "homepage": "https://github.com/mcconejero/botkit-chatbase-middleware#readme",
+  "devDependencies": {
+    "eslint-config-simplest": "^0.1.0"
+  }
 }
