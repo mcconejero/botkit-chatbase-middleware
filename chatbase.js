@@ -25,14 +25,14 @@ module.exports = (apiKey, platform = "Any") => {
 
   function send(bot, message, next) {
     if (message && message.type == "message") {
-      that.logMessage(bot, message, "user");
+      logMessage(bot, message, "user");
     }
     next();
   }
 
   function receive(bot, message, next) {
     if (message && message.type == "message") {
-      that.logMessage(bot, message, "agent");
+      logMessage(bot, message, "agent");
     }
     next();
   }
