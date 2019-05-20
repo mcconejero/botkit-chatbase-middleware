@@ -4,7 +4,7 @@ A middleware package for [Botkit](https://botkit.ai/) that easily logs your conv
 
 Install
 ```
-npm install chatbase-botkit-middleware --save
+npm install botkit-chatbase-middleware --save
 ```
 
 Usage
@@ -13,7 +13,7 @@ It's really simple!
 First, in your bot.js file, include this module and initialize it with your Chatbase API key.
 
 ```
-var chatbase = require('chatbase-botkit-middleware')(API_KEY, PLATFORM).botkit;
+var chatbase = require('botkit-chatbase-middleware')(API_KEY, PLATFORM);
 ```
 
 Second, add the following code, usually right after initializing the Botkit controller.
